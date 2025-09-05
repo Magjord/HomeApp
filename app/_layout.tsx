@@ -3,22 +3,21 @@ import { useEffect } from "react";
 import { Platform } from "react-native";
 
 export default function RootLayout() {
-  // Register a service worker when running on the web build
   useEffect(() => {
     if (Platform.OS !== "web") return;
     if (!("serviceWorker" in navigator)) return;
 
-    // Use the <base href="..."> tag to figure out the GitHub Pages base path (/HomeApp/)
-    const base = document.querySelector("base")?.getAttribute("href") || "/";
-    // Ensure trailing slash
-    const scope = base.endsWith("/") ? base : base + "/";
-    const swUrl = scope + "sw.js";
+    // Auto-detect GitHub Pages project path: "/<repo>/" from the current URL
+    const segments = window.location.pathname.split("/").filter(Boolean);
+    // If served as project page (e.g. /HomeApp/...), use "/HomeApp/"; else use "/"
+    const scope = segments.length > 0 ? `/${segments[0]}/` : "/";
+
+    const swUrl = `${scope}sw.js`;
 
     navigator.serviceWorker
       .register(swUrl, { scope })
       .then((reg) => {
-        // Optional: console log for first load
-        console.log("[SW] registered with scope:", reg.scope);
+        console.log("[SW] registered:", { scope: reg.scope, url: swUrl });
       })
       .catch((err) => {
         console.warn("[SW] registration failed:", err);
@@ -27,3 +26,4 @@ export default function RootLayout() {
 
   return <Stack />;
 }
+
