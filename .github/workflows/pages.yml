@@ -30,6 +30,12 @@ jobs:
       - name: Build web (Expo)
         run: npx expo export --platform web
 
+      - name: Copy public assets (SW, offline page)
+        run: |
+          if [ -d public ]; then
+            cp -r public/* dist/
+          fi
+
       # GitHub Pages SPA fallback (so deep links work)
       - name: Add 404.html fallback
         run: cp dist/index.html dist/404.html
