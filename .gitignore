@@ -5,9 +5,11 @@ node_modules/
 
 # Expo
 .expo/
+.expo-shared/
 dist/
 web-build/
 expo-env.d.ts
+expo-error.log
 
 # Native
 .kotlin/
@@ -25,15 +27,24 @@ expo-env.d.ts
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+pnpm-debug.*
 
-# macOS
+# OS junk
 .DS_Store
 *.pem
+Thumbs.db
 
 # local env files
 .env*.local
 
 # typescript
 *.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+
+# Misc
+*.orig
 
 app-example
